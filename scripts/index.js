@@ -155,9 +155,9 @@ octaveDown.onclick = function(){
 }
 
 drumVolume.onmouseup = function(e){
-  audioSettings.drum1 = drumVolume.val[0] * 5;
-  audioSettings.drum2 = drumVolume.val[1] * 5;
-  audioSettings.drum3 = drumVolume.val[2] * 5;
+  audioSettings.drum1vol = drumVolume.val[0] * 5;
+  audioSettings.drum2vol = drumVolume.val[1] * 5;
+  audioSettings.drum3vol = drumVolume.val[2] * 5;
   audioSettings.hihatvol = drumVolume.val[3] * 5;
   audioSettings.snarevol = drumVolume.val[4] * 5;
   audioSettings.kickvol = drumVolume.val[5] * 5;
