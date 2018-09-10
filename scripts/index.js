@@ -43,13 +43,13 @@ nx.onload = function(){
   drumVolume.setNumberOfSliders(6)
   bassVolume.colors.accent = "#58C278";
   bassVolume.init()
-  hiHatSelector.colors.accent = "#3BB9FF"
-  hiHatSelector.font = "open sans"
-  hiHatSelector.init();
-  snareSelector.colors.accent = "#3BB9FF"
-  snareSelector.init();
-  kickSelector.colors.accent = "#3BB9FF"
-  kickSelector.init();
+  // hiHatSelector.colors.accent = "#3BB9FF"
+  // hiHatSelector.font = "open sans"
+  // hiHatSelector.init();
+  // snareSelector.colors.accent = "#3BB9FF"
+  // snareSelector.init();
+  // kickSelector.colors.accent = "#3BB9FF"
+  // kickSelector.init();
 
   volume.colors.accent = "#FFC51F"
   tempo.colors.accent = "#FFC51F"
@@ -187,15 +187,15 @@ bassVolume.onmousedown = function(){
 }
 
 // should try and refactor into one function
-hiHatSelector.onclick = function(e){
-  audioSettings.hihat = hiHatSelector.val.index.toString();
-}
-snareSelector.onclick = function(e){
-  audioSettings.snare = snareSelector.val.index.toString();
-}
-kickSelector.onclick = function(e){
-  audioSettings.kick = kickSelector.val.index.toString();
-}
+// hiHatSelector.onclick = function(e){
+//   audioSettings.hihat = hiHatSelector.val.index.toString();
+// }
+// snareSelector.onclick = function(e){
+//   audioSettings.snare = snareSelector.val.index.toString();
+// }
+// kickSelector.onclick = function(e){
+//   audioSettings.kick = kickSelector.val.index.toString();
+// }
 
 // changes global tempo when tempo dial changes
 tempo.onmouseup = function(){
