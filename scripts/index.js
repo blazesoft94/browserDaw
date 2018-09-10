@@ -9,6 +9,9 @@ var audioSettings = {
   hihatvol: 5,
   snarevol: 5,
   kickvol: 5,
+  drum1vol: 5,
+  drum2vol: 5,
+  drum3vol: 5,
   bassvol: 3,
   rootFreq: 220.0,
   bassFreq: 55.0,
@@ -33,11 +36,11 @@ nx.onload = function(){
   bassMatrix.colors.accent = "#58C278"
   bassMatrix.init();
   drumMatrix.col = 32;
-  drumMatrix.row = 3;
+  drumMatrix.row = 6;
   drumMatrix.colors.accent = "#87DEFF";
   drumMatrix.init();
   drumVolume.colors.accent = "#35C9FF";
-  drumVolume.setNumberOfSliders(3)
+  drumVolume.setNumberOfSliders(6)
   bassVolume.colors.accent = "#58C278";
   bassVolume.init()
   hiHatSelector.colors.accent = "#3BB9FF"
@@ -152,9 +155,13 @@ octaveDown.onclick = function(){
 }
 
 drumVolume.onmouseup = function(e){
-  audioSettings.hihatvol = drumVolume.val[0] * 5;
-  audioSettings.snarevol = drumVolume.val[1] * 5;
-  audioSettings.kickvol = drumVolume.val[2] * 5;
+  audioSettings.drum1 = drumVolume.val[0] * 5;
+  audioSettings.drum2 = drumVolume.val[1] * 5;
+  audioSettings.drum3 = drumVolume.val[2] * 5;
+  audioSettings.hihatvol = drumVolume.val[3] * 5;
+  audioSettings.snarevol = drumVolume.val[4] * 5;
+  audioSettings.kickvol = drumVolume.val[5] * 5;
+
   $('#drumVolume').unbind('mouseleave');
 }
 
