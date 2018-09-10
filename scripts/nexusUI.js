@@ -5715,7 +5715,7 @@ var number = module.exports = function (target) {
 	  labeldiv.style.textAlign = this.labelAlign
 	  labeldiv.style.lineHeight = this.labelSize+"px"
 	  labeldiv.style.width = this.GUI.w+"px"
-	  labeldiv.style.color = nx.colors.white
+	  labeldiv.style.color = nx.colors.black
 	  labeldiv.className = "nxlabel"
 	  newdiv.appendChild(labeldiv)
   }
