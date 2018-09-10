@@ -20,10 +20,10 @@ function triggerDrums(drumMatrix, time, col) {
         drums.start('drum1', time, 0, "16n", 0, audioSettings.drum1vol)
       }
       if (column[1] === 1) {
-        drums.start('drum1', time, 0, "16n", 0, audioSettings.drum2vol)
+        drums.start('drum2', time, 0, "16n", 0, audioSettings.drum2vol)
       }
       if (column[2] === 1) {
-        drums.start('drum1', time, 0, "16n", 0, audioSettings.drum3vol)
+        drums.start('drum3', time, 0, "16n", 0, audioSettings.drum3vol)
       }
       if (column[3] === 1) {
         drums.start('hihat', time, 0, "16n", 0, audioSettings.hihatvol)
