@@ -83,6 +83,7 @@ app.use('/users', users);
 
     // static routing
 app.use('/style', express.static(path.join(__dirname, '/style')))
+app.use('/images', express.static(path.join(__dirname, '/images')))
 app.use('/scripts', express.static(path.join(__dirname, '/scripts')))
 app.use('/samples', express.static(path.join(__dirname, '/samples')))
 app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
