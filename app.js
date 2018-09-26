@@ -83,6 +83,7 @@ app.use('/users', users);
 
     // static routing
 app.use('/style', express.static(path.join(__dirname, '/style')))
+app.use('/logo_3.png', express.static(path.join(__dirname, '/images/logo_2.png')))
 app.use('/images', express.static(path.join(__dirname, '/images')))
 app.use('/scripts', express.static(path.join(__dirname, '/scripts')))
 app.use('/samples', express.static(path.join(__dirname, '/samples')))
