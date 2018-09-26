@@ -12,6 +12,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var fs = require("fs");
 
 mongoose.connect('mongodb://groovecoders:groove94@ds145562.mlab.com:45562/groove').then(()=>console.log("started db"), err=>console.log(err));
 var db = mongoose.connection;
@@ -93,6 +94,13 @@ app.use('/tone', express.static(path.join(__dirname, '/node_modules/tone/build/'
 
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+app.get('/logo_give.png', function(req, res){
+    console.log("hello");
+    var img = fs.readFileSync('logo_2.png');
+    console.log(img);
+    res.writeHead(200, {'Content-Type': 'image/png' });
+    res.end(img, 'binary');
 });
     // Set Port
 app.set('port', (process.env.PORT || 3000));
