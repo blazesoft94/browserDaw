@@ -156,6 +156,7 @@ octaveDown.onclick = function(){
 
 drumVolume.onmouseup = function(e){
   audioSettings.drum1vol = drumVolume.val[0] * 5;
+  console.log(drumVolume.val[0]*5);
   audioSettings.drum2vol = drumVolume.val[1] * 5;
   audioSettings.drum3vol = drumVolume.val[2] * 5;
   audioSettings.hihatvol = drumVolume.val[3] * 5;
@@ -164,6 +165,21 @@ drumVolume.onmouseup = function(e){
 
   $('#drumVolume').unbind('mouseleave');
 }
+
+$(".drumslider").change(function(){
+  // console.log($(this).val());
+  var drumSliders = $(".drumslider");
+  audioSettings.drum1vol = drumSliders[0].value;
+  audioSettings.drum2vol = drumSliders[1].value;
+  audioSettings.drum3vol = drumSliders[2].value;
+  audioSettings.hihatvol = drumSliders[3].value;
+  audioSettings.snarevol = drumSliders[4].value;
+  audioSettings.kickvol  = drumSliders[5].value;
+  // var length = drumSliders.length;
+  // for(var i = 0; i<length; i++){
+  //     // console.log($(drumSliders[i]).val());
+  // }
+});
 
 drumVolume.onmousedown = function(){
   $('#drumVolume').bind('mouseleave', function (){

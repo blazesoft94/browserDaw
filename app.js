@@ -28,6 +28,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout:'layout'}));
 app.set('view engine', 'handlebars');
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+}
 // BodyParser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -96,9 +99,7 @@ app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 app.get('/logo_give.png', function(req, res){
-    console.log("hello");
     var img = fs.readFileSync('logo_2.png');
-    console.log(img);
     res.writeHead(200, {'Content-Type': 'image/png' });
     res.end(img, 'binary');
 });
