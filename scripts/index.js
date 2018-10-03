@@ -216,6 +216,7 @@ bassVolume.onmousedown = function(){
 // changes global tempo when tempo dial changes
 tempo.onmouseup = function(){
   Tone.Transport.bpm.value = tempo.val.value;
+  console.log(tempo.val.value);
   $('#tempo').unbind('mouseleave');
 }
 
@@ -230,6 +231,7 @@ tempo.onmousedown = function(){
 
 volume.onmouseup = function(){
   Tone.Master.volume.value = volume.val.value;
+  // console.log(volume.val.value);
   $('#volume').unbind('mouseleave');
 }
 

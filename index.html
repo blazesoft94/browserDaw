@@ -12,31 +12,36 @@
     <script type="text/javascript" src="./scripts/synth.js"></script>
     <script type="text/javascript" src="./scripts/bass.js"></script>
     <script type="text/javascript" src="./scripts/loop.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <style>
       svg.dial {
-  width: 150px;
-  height: 150px;
-  float: right;
-}
+        width: 130px;
+        height: 130px;
+        position: relative;
+        top:20px;
+      }
+      div.dial::after{
+        margin-left:40px;
+        margin-top:10px;
+        display: block;
+        content: "Tempo";
+      }
 
-.dial .knob {
-  /*transition: 500ms transform;*/
-}
 .dial .knob circle {
-  stroke: gray;
+  stroke: grey;
   stroke-width: 0.25px;
   fill: url(#knobgradient);
 }
 .dial .knob line {
-  stroke: gray;
+  stroke: #272829;
   stroke-width: 0.5px;
   stroke-linecap: round;
 }
 .dial .knob_number {
-  fill: white;
-  stroke: gray;
+  fill: #272829;
+  stroke: royalblue;
   stroke-width: 0.0625px;
-  font-size: 6px;
+  font-size: 3px;
   font-family: "Helvetica", "Arial", sans-serif;
   letter-spacing: -0.5px;
   text-anchor: middle;
@@ -62,7 +67,6 @@
      }
       .slider {
           -webkit-appearance: none;
-          /* width: 100%; */
           padding: 4px;
           height: 15px;
           border-radius: 5px;
@@ -98,51 +102,172 @@
         width: 75%;
         float: left;
       }
+
+      body {
+        /* margin: 0;
+        background-image: radial-gradient(30% 50%, #555 6%, #333 90%);
+        display: flex;
+        justify-content: center;
+        align-items: center; */
+      }
+      #app{
+        top:30px;
+      }
+      .App {
+        /* display: grid; */
+        justify-content: center;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 5em;
+      }
+      .App::after{
+        margin-left:5px;
+        margin-top:30px;
+        display: block;
+        content: "Master Gain";
+      }
+      
+      .knob {
+        display: flex;
+        position: relative;
+      }
+      .knob .ticks {
+        position: absolute;
+      }
+      .knob .ticks .tick {
+        position: absolute;
+        background: black;
+        box-shadow: inset 0 0 0 0 black;
+        width: 3px;
+        transition: box-shadow 0.5s;
+      }
+      .knob .ticks .tick.active {
+        box-shadow: inset 0 0 5px 2px #509eec, 0 0 0 1px #369;
+      }
+      .knob.outer {
+        border-radius: 50%;
+        border: 1px solid #222;
+        border-bottom: 5px solid #222;
+        background-image: radial-gradient(100% 70%, #666 6%, #333 90%);
+        box-shadow: 0 5px 15px 2px black, 0 0 5px 3px black, 0 0 0 12px #444;
+      }
+      .knob.inner {
+        border-radius: 50%;
+      }
+      .knob.inner .grip {
+        position: absolute;
+        width: 5%;
+        height: 5%;
+        bottom: 2%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: #509eec;
+        box-shadow: 0 0 3px 1px black;
+      }
+      
+
       </style>
     <style>
       body{
         background:#ccc;
       }
+      @media only screen and (max-width: 576px) {
+        .App{
+          margin-bottom:100px;
+          margin-left:20px;
+        }
+        .options span{
+          display:block;
+        }
+        #bassVolume {
+          top: 0px;
+        }
+      }
     </style>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   </head>
   <body>
       <header>
-          <img src="logo_give.png" alt="">
+          <img style="max-width:100%;min-width:50%;display:inline-block;margin:0 auto;" src="logo_give.png" alt="">
         </header>
-        <div style="display: flex;justify-content: space-between">
+  <div class="container-fluid" style="padding-top:10px;margin-top:10px;">
+          <!--  style="display: flex;justify-content: space-between" -->
+      <div class="row">
     
-    <div><canvas nx="matrix" id="drumMatrix" label="Drum Machine"></canvas>
-          
-    <canvas nx="matrix" id="synthMatrix" label="Synth"></canvas>
+      </div>
+    <div class="row">
+      <div  class="col-md-8">
+        <canvas style="width:90%!important;" nx="matrix" id="drumMatrix" label="Drum Machine"></canvas>
+      </div>
+      <div class="col-md-4">
+          <div class="ranges" >
+              <!-- <canvas nx="tabs" class="drumSelector" id="hiHatSelector"></canvas>
+              <canvas nx="tabs" class="drumSelector" id="snareSelector"></canvas>
+              <canvas nx="tabs" class="drumSelector" id="kickSelector"></canvas> -->
+              <canvas nx="multislider" id="drumVolume" width="300" height="160" style="display:none;"></canvas>
+              <div class="slidecontainer">
+                <input type="range" min="0" max="5" step="0.01" value="5" class="drumslider" id="myRange1"><br>
+              </div>
+              <div class="slidecontainer">
+                <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange2"><br>
+              </div>
+              <div class="slidecontainer">
+                <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange3"><br>
+              </div>
+              <div class="slidecontainer">
+                <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange4"><br>
+              </div>
+              <div class="slidecontainer">
+                <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange5"><br>
+              </div>
+              <div class="slidecontainer">
+                <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange6"><br>
+              </div>
+          </div>
+      </div>
   </div>
-    <div class="ranges">
-      <!-- <canvas nx="tabs" class="drumSelector" id="hiHatSelector"></canvas>
-      <canvas nx="tabs" class="drumSelector" id="snareSelector"></canvas>
-      <canvas nx="tabs" class="drumSelector" id="kickSelector"></canvas> -->
-      <canvas nx="multislider" id="drumVolume" width="300" height="160"></canvas>
-      <div class="slidecontainer">
-        <input type="range" min="0" max="5" step="0.01" value="5" class="drumslider" id="myRange1"><br>
-      </div>
-      <div class="slidecontainer">
-        <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange2"><br>
-      </div>
-      <div class="slidecontainer">
-        <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange3"><br>
-      </div>
-      <div class="slidecontainer">
-        <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange4"><br>
-      </div>
-      <div class="slidecontainer">
-        <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange5"><br>
-      </div>
-      <div class="slidecontainer">
-        <input type="range" min="0" step="0.01" max="5" value="5" class="drumslider" id="myRange6"><br>
-      </div>
+
+    <div class="row">
+        <div  class="col-md-8">
+          <canvas style="width:90%!important;" nx="matrix" id="synthMatrix" label="Synth"></canvas>
+        </div>
+        <div class="col-md-2 col-sm-6 col-s-6 col-xs-6">
+            <canvas style="display:none;" nx="dial" id="tempo" label="Tempo" min="60" max="220"></canvas>
+            <div>
+                <div class="dial">
+                  <svg viewBox="-6 -6 12 12" class="dial" id="foobar">
+                      <defs>
+                        <radialGradient id="knobgradient">
+                          <stop offset="0" stop-color="gray"/>
+                          <stop offset="1" stop-color="silver"/>
+                        </radialGradient>
+                      </defs>
+                      <g class="knob">
+                        <circle class="knob_center" cx="0" cy="0" r="0.015625"/>
+                        <g class="knob_gfx">
+                          <circle cx="0" cy="0" r="5"/>
+                          <line x1="0" y1="-2.5" x2="0" y2="-4.5"/>
+                        </g>
+                        <text class="knob_number"/>
+                      </g>
+                  </svg>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6  col-s-6 col-xs-6">
+            <div style="position:relative!important;" id="app"></div>
+        </div>
+      
+            
     </div>
-  </div>
-    <div style="width: 30%;float:right" class="container">
-      <label for="modeSelector" id="modeLabel">Scale:</label>
-      <select id="modeSelector" name="Scale">
+    
+    <!-- <div style="width: 30%;float:right" class="container"> -->
+    <div class="options row mb-3 ml-3">  
+      <span>
+      <label for="modeSelector" class="mr-2" id="modeLabel">Scale:</label>
+      <select id="modeSelector" class="mr-2" name="Scale">
         <option>major</option>
         <option>dorian</option>
         <option>phyrgian</option>
@@ -151,8 +276,10 @@
         <option>minor</option>
         <option>locrian</option>
       </select>
-      <label for="keySelector" id="keyLabel">Key:</label>
-      <select id="keySelector" name="Key">
+      </span>
+      <span>
+      <label for="keySelector" class="mr-2" id="keyLabel">Key:</label>
+      <select id="keySelector" class="mr-2" name="Key">
         <option value="220.0">A</option>
         <option value="246.94">B</option>
         <option value="261.63">C</option>
@@ -161,59 +288,59 @@
         <option value="349.23">F</option>
         <option value="392.00">G</option>
       </select>
-      <label for="accidentalSelector" id="accidentalLabel">Accidentals:</label>
-      <select id="accidentalSelector" name="Accidentals">
+    </span>
+    <span>
+      <label for="accidentalSelector" class="mr-2" id="accidentalLabel">Accidentals:</label>
+      <select id="accidentalSelector" class="mr-2" name="Accidentals">
         <option>none</option>
         <option>#</option>
         <option>b</option>
       </select>
-      <label for="octaveUp" id="octaveLabel">Octave:</label>
-      <button type="button" name="octaveUp" id="octaveUp">+</button>
-      <button type="button" name="octaveDown" id="octaveDown">-</button>
-      <div class="effectButtons">
-        <button type="button" id="bitcrusherSelect">Bitcrusher</button>
-        <button type="button" id="freeverbSelect">Reverb</button>
-        <button type="button" id="autofilterSelect">AutoFilter</button>
-        <button type="button" id="phaserSelect">Phaser</button>
-        <button type="button" id="chorusSelect">Chorus</button>
+    </span>
+    <span>
+      <label for="octaveUp" class="mr-2" id="octaveLabel">Octave:</label>
+      <button type="button" class="mr-2" name="octaveUp" id="octaveUp">+</button>
+      <button type="button" class="mr-2" name="octaveDown" id="octaveDown">-</button>
+    </span>
+    </div>
+    <div class="row ml-3 mb-3">
+      <div class="effectButtons" style="display:inline-block;">
+        <button class="btn btn-outline-dark" type="button" id="bitcrusherSelect">Bitcrusher</button>
+        <button class="btn btn-outline-dark" type="button" id="freeverbSelect">Reverb</button>
+        <button class="btn btn-outline-dark" type="button" id="autofilterSelect">AutoFilter</button>
+        <button class="btn btn-outline-dark" type="button" id="phaserSelect">Phaser</button>
+        <button class="btn btn-outline-dark" type="button" id="chorusSelect">Chorus</button>
       </div>
     </div>
-    <div>
-      <div class="dial">
-        
-
-<svg viewBox="-6 -6 12 12" class="dial" id="foobar">
-    <defs>
-      <radialGradient id="knobgradient">
-        <stop offset="0" stop-color="gray"/>
-        <stop offset="1" stop-color="silver"/>
-      </radialGradient>
-    </defs>
-    <g class="knob">
-      <circle class="knob_center" cx="0" cy="0" r="0.015625"/>
-      <g class="knob_gfx">
-        <circle cx="0" cy="0" r="5"/>
-        <line x1="0" y1="-2.5" x2="0" y2="-4.5"/>
-      </g>
-      <text class="knob_number"/>
-    </g>
-  </svg>
+    
   
   <p style="display: none;"><label><input type="checkbox" id="snapping"> Snap to</label> <input type="number" id="snapping_granularity" min="2" value="16" size="2" style="width: 4em"> divisions</p>
   
   <input style="display: none" type="range" min="-8" max="8" value="1" step="0.03125" id="rangetesting" style="width: 512px; display: block;"/>
   
+    <canvas style="display:none;" nx="dial" id="volume" label="Volume" min="-24" max="6"></canvas>
+    <div class="row">
+        <div  class="col-md-8">
+          <canvas  style="width:90%!important;" nx="matrix" id="bassMatrix" label="Bass Synth"></canvas>
+        </div>
+        <div class="col-md-4">
+          <canvas nx="slider" id="bassVolume" min="-24" max="10" label="Gain"></canvas>
+        </div>
+    </div>
+    
+    
+      
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class='col-md-4'>
+        <button type="button" class="btn btn-success" name="start" id="startButton">START</button>
+        <button type="button" class="btn btn-danger" name="stop" id="stopButton">STOP</button>
       </div>
-    <canvas nx="dial" id="volume" label="Volume" min="-24" max="6"></canvas>
-    <canvas nx="dial" id="tempo" label="Tempo" min="60" max="220"></canvas>
+      <div class="col-md-4"></div>      
     </div>
-    <canvas nx="matrix" id="bassMatrix" label="Bass Synth"></canvas>
-    <canvas nx="slider" id="bassVolume" min="-24" max="10" label="Gain"></canvas>
 
-    <div class='startbuttons'>
-      <button type="button" name="start" id="startButton">START</button>
-      <button type="button" name="stop" id="stopButton">STOP</button>
-    </div>
+  </div>
+  
     <script type="text/javascript">
       src="./scripts/colors.js"</script>
     <script type="text/javascript" src="./scripts/index.js"></script>
@@ -277,8 +404,8 @@ function rotations_to_speed(rotations) {
 
 var cur_speed = null;
 var cur_rotations = null;
-var max_rotations = speed_to_rotations(16);
-var min_rotations = speed_to_rotations(-16);
+var max_rotations = speed_to_rotations(220);
+var min_rotations = speed_to_rotations(60);
 
 function set_rotations(rotations) {
   if (snapping.checked) {
@@ -299,6 +426,8 @@ function set_rotations(rotations) {
   cur_speed = rotations_to_speed(rotations);
   
   foobar.getElementsByClassName('knob_number')[0].textContent = format_number(cur_speed);
+  // Tone.Master.volume.value = cur_speed;
+  Tone.Transport.bpm.value = cur_speed;
   foobar.getElementsByClassName('knob_gfx')[0].style.transform = 'rotate(' + (cur_rotations * 360) + 'deg)';
 }
 function set_speed(speed) {
@@ -383,8 +512,10 @@ function drag_rotate(e) {
   // var rotation = rad / Math.PI / 2;
   
   var delta_rotation = delta / Math.PI / 2;
+  delta_rotation *= 1.2;
   var rotations = knob_drag_previous_rotations + delta_rotation;
   knob_drag_previous_rotations = rotations;
+  console.log("rotations is ", delta_rotation );
   set_rotations(rotations);
 }
 
@@ -413,15 +544,246 @@ function plotF(a,b,c,color){var color=color||"#f00";var c=c||{xMin:-8,xMax:8,yMi
 
 // Quick and dirty plotting, just to check if the function is correct.
 plotF(speed_to_rotations, canvas1, {
-  xMin: -16,
-  xMax: 16,
+  xMin: 0,
+  xMax: 100,
   yMin: -6,
   yMax: 6
 }, "#f00");
 plotF(rotations_to_speed, canvas2, {
   xMin: -6,
   xMax: 6,
-  yMin: -16,
-  yMax: 16
+  yMin: 0,
+  yMax: 100
 }, "#00f");
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+<script>
+    "use strict";
+  
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+  
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+  
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+  
+  var Knob = function (_React$Component) {
+    _inherits(Knob, _React$Component);
+  
+    function Knob(props) {
+      _classCallCheck(this, Knob);
+  
+      var _this = _possibleConstructorReturn(this, (Knob.__proto__ || Object.getPrototypeOf(Knob)).call(this, props));
+  
+      _this.startDrag = function (e) {
+        e.preventDefault();
+        var knob = e.target.getBoundingClientRect();
+        var pts = {
+          x: knob.left + knob.width / 2,
+          y: knob.top + knob.height / 2
+        };
+        var moveHandler = function moveHandler(e) {
+          _this.currentDeg = _this.getDeg(e.clientX, e.clientY, pts);
+          if (_this.currentDeg === _this.startAngle) _this.currentDeg--;
+          var newValue = Math.floor(_this.convertRange(_this.startAngle, _this.endAngle, _this.props.min, _this.props.max, _this.currentDeg));
+          // console.log("value is ", newValue);
+          Tone.Master.volume.value = newValue;
+          
+          _this.setState({ deg: _this.currentDeg });
+          _this.props.onChange(newValue);
+        };
+        document.addEventListener("mousemove", moveHandler);
+        document.addEventListener("mouseup", function (e) {
+          document.removeEventListener("mousemove", moveHandler);
+        });
+      };
+  
+      _this.getDeg = function (cX, cY, pts) {
+        var x = cX - pts.x;
+        var y = cY - pts.y;
+        var deg = Math.atan(y / x) * 180 / Math.PI;
+        if (x < 0 && y >= 0 || x < 0 && y < 0) {
+          deg += 90;
+        } else {
+          deg += 270;
+        }
+        var finalDeg = Math.min(Math.max(_this.startAngle, deg), _this.endAngle);
+        return finalDeg;
+      };
+  
+      _this.convertRange = function (oldMin, oldMax, newMin, newMax, oldValue) {
+        return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
+      };
+  
+      _this.renderTicks = function () {
+        var ticks = [];
+        var incr = _this.fullAngle / _this.props.numTicks;
+        var size = _this.margin + _this.props.size / 2;
+        for (var deg = _this.startAngle; deg <= _this.endAngle; deg += incr) {
+          var tick = {
+            deg: deg,
+            tickStyle: {
+              height: size + 10,
+              left: size - 1,
+              top: size + 2,
+              transform: "rotate(" + deg + "deg)",
+              transformOrigin: "top"
+            }
+          };
+          ticks.push(tick);
+        }
+        return ticks;
+      };
+  
+      _this.dcpy = function (o) {
+        return JSON.parse(JSON.stringify(o));
+      };
+  
+      _this.fullAngle = props.degrees;
+      _this.startAngle = (360 - props.degrees) / 2;
+      _this.endAngle = _this.startAngle + props.degrees;
+      _this.margin = props.size * 0.15;
+      _this.currentDeg = Math.floor(_this.convertRange(props.min, props.max, _this.startAngle, _this.endAngle, props.value));
+      _this.state = { deg: _this.currentDeg };
+      return _this;
+    }
+  
+    _createClass(Knob, [{
+      key: "render",
+      value: function render() {
+        var _this2 = this;
+  
+        var kStyle = {
+          width: this.props.size,
+          height: this.props.size
+        };
+        var iStyle = this.dcpy(kStyle);
+        var oStyle = this.dcpy(kStyle);
+        oStyle.margin = this.margin;
+        if (this.props.color) {
+          oStyle.backgroundImage = "radial-gradient(100% 70%,hsl(210, " + this.currentDeg + "%, " + this.currentDeg / 5 + "%),hsl(" + Math.random() * 100 + ",20%," + this.currentDeg / 36 + "%))";
+        }
+        iStyle.transform = "rotate(" + this.state.deg + "deg)";
+  
+        return React.createElement(
+          "div",
+          { className: "knob", style: kStyle },
+          React.createElement(
+            "div",
+            { className: "ticks" },
+            this.props.numTicks ? this.renderTicks().map(function (tick, i) {
+              return React.createElement("div", {
+                key: i,
+                className: "tick" + (tick.deg <= _this2.currentDeg ? " active" : ""),
+                style: tick.tickStyle
+              });
+            }) : null
+          ),
+          React.createElement(
+            "div",
+            { className: "knob outer", style: oStyle, onMouseDown: this.startDrag },
+            React.createElement(
+              "div",
+              { className: "knob inner", style: iStyle },
+              React.createElement("div", { className: "grip" })
+            )
+          )
+        );
+      }
+    }]);
+  
+    return Knob;
+  }(React.Component);
+  
+  Knob.defaultProps = {
+    size: 150,
+    min: 10,
+    max: 30,
+    numTicks: 0,
+    degrees: 270,
+    value: 0
+  };
+  
+  var App = function (_React$Component2) {
+    _inherits(App, _React$Component2);
+  
+    function App() {
+      var _ref;
+  
+      var _temp, _this3, _ret;
+  
+      _classCallCheck(this, App);
+  
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+  
+      return _ret = (_temp = (_this3 = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this3), _this3.state = { value: 0 }, _this3.handleChange = function (newValue) {
+        _this3.setState({
+          value: newValue
+        });
+      }, _temp), _possibleConstructorReturn(_this3, _ret);
+    }
+  
+    _createClass(App, [{
+      key: "render",
+      value: function render() {
+        return React.createElement(
+          "div",
+          { className: "App" },
+          React.createElement(Knob, {
+            size: 80,
+            numTicks: 25,
+            degrees: 260,
+            min: -60,
+            max: 6,
+            value: 6,
+            color: true,
+            onChange: this.handleChange
+          }),
+          // React.createElement(Knob, {
+          //   numTicks: 125,
+          //   degrees: 180,
+          //   min: 1,
+          //   max: 100,
+          //   value: 0,
+          //   onChange: this.handleChange
+          // })
+        );
+      }
+    }]);
+  
+    return App;
+  }(React.Component);
+  
+  ReactDOM.render(React.createElement(App, null), document.querySelector("#app"));
+  </script>

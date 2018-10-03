@@ -155,7 +155,7 @@ manager.prototype.add = function(type, args) {
       canv.setAttribute('nx', type);
       if (args) {
         if (args.x || args.y) {
-           canv.style.position = "absolute";
+        //    canv.style.position = "relative";
         }
         if (args.x) {
            canv.style.left = args.x + "px";

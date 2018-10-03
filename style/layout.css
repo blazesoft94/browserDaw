@@ -8,29 +8,29 @@ body {
 }
 
 #drumMatrix {
-  height: 200px;
-  width: 800px;
+  height: 190px;
+  /* width: 800px; */
   float: left;
 }
 
 #synthMatrix {
   height: 200px;
-  width: 800px;
+  /* width: 800px; */
   float: left;
 }
 
 #bassMatrix {
-  clear: left;
+  /* clear: left; */
   float: left;
   height: 200px;
-  width: 800px;
+  /* width: 800px; */
 }
 
 #tempo {
   width: 100px;
   height: 170px;
   clear: both;
-  float: right;
+  /* float: right; */
 }
 
 #volume {
@@ -109,11 +109,11 @@ body {
   left: 95px;
 }
 
-.effectButtons {
+/* .effectButtons {
   position: absolute;
   top: 170px;
   right: 240px;
-}
+} */
 
 #bitcrusherSelect {
   top: 0px;
@@ -145,12 +145,15 @@ body {
 }
 
 #bassVolume {
-  position: absolute;
-  top: 500px;
-  left: 815px;
+  position: relative;
+  top: 50px;
+  /* left: 815px; */
 }
 
 .startbuttons button {
   height: 40px;
   width: 70px;
 }
+/* @media screen and (max-width:476px) {
+    background:#abc234!important;
+} */
